@@ -1,0 +1,30 @@
+{
+  "name": "obsidian-semantic-embedding-search",
+  "version": "1.0.0",
+  "description": "Semantic search and related notes for Obsidian using AI embedding models (Ollama, OpenAI & compatible APIs).",
+  "main": "dist/main.js",
+  "author": "johannjdk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johannjdk/obsidian-semantic-embedding-search.git"
+  },
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "test": "node --test tests/*.test.ts"
+  },
+  "keywords": [
+    "obsidian",
+    "plugin",
+    "embeddings",
+    "semantic-search",
+    "ai"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "esbuild": "^0.24.2",
+    "obsidian": "^1.7.2",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "semantic-embedding-search",
+  "name": "Semantic Embedding Search",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "Search your notes semantically using AI embedding models (Ollama, OpenAI & compatible APIs).",
+  "author": "johannjdk",
+  "authorUrl": "https://github.com/johannjdk",
+  "isDesktopOnly": false
+}
