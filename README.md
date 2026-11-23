@@ -55,6 +55,4 @@ npm run build  # Type-check & production build
 
 ## License
 
-Semantic Embedding Search is licensed under the [MIT License](https://github.com/johannjdk/obsidian-semantic-embedding-search/blob/main/LICENSE).# obsidian-semantic-embedding-search
-# obsidian-semantic-embedding-search
-# obsidian-semantic-embedding-search
+Semantic Embedding Search is licensed under the [MIT License](https://github.com/johannjdk/obsidian-semantic-embedding-search/blob/main/LICENSE).
