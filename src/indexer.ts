@@ -147,7 +147,7 @@ export class VaultIndexer {
             continue;
           }
 
-          const chunks = chunkMarkdown(content, file.path, file.basename, {
+          const chunks = chunkMarkdown(file.path, file.basename, content, {
             maxChunkChars: settings.maxChunkChars,
             chunkOverlapChars: settings.chunkOverlapChars,
           });

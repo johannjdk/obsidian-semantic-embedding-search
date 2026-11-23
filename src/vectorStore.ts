@@ -47,6 +47,7 @@ export class VectorStore {
   constructor(provider: EmbeddingProviderType, model: string, initial?: IndexData) {
     if (initial && initial.version === INDEX_VERSION) {
       this.data = initial;
+      this.pruneCorruptedEntries();
     } else {
       this.data = {
         version: INDEX_VERSION,
@@ -56,6 +57,41 @@ export class VectorStore {
         files: {},
         chunks: [],
       };
+    }
+  }
+
+  private pruneCorruptedEntries(): void {
+    const validChunks: StoredChunk[] = [];
+    const chunkIdsByPath = new Map<string, Set<string>>();
+
+    for (const chunk of this.data.chunks) {
+      if (!this.data.files[chunk.path]) {
+        continue;
+      }
+      validChunks.push(chunk);
+      let ids = chunkIdsByPath.get(chunk.path);
+      if (!ids) {
+        ids = new Set<string>();
+        chunkIdsByPath.set(chunk.path, ids);
+      }
+      ids.add(chunk.id);
+    }
+
+    const removedPaths = new Set<string>();
+    for (const [path, meta] of Object.entries(this.data.files)) {
+      if (meta.chunkIds.length === 0) continue;
+      const validIds = chunkIdsByPath.get(path);
+      if (!validIds || meta.chunkIds.some((id) => !validIds.has(id))) {
+        delete this.data.files[path];
+        removedPaths.add(path);
+      }
+    }
+
+    if (removedPaths.size > 0 || validChunks.length !== this.data.chunks.length) {
+      this.data.chunks =
+        removedPaths.size > 0
+          ? validChunks.filter((chunk) => !removedPaths.has(chunk.path))
+          : validChunks;
     }
   }
 

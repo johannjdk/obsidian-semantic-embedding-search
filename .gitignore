@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+main.js
+
+# Obsidian local plugin state
+data.json
+embeddings-index*.json
+
+# Logs & OS files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/

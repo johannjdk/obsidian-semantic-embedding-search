@@ -99,4 +99,37 @@ describe("VectorStore", () => {
     restored.removeFile("folder/new.md");
     assert.equal(restored.getStats().fileCount, 0);
   });
+
+  it("prunes corrupted chunks with mismatched paths on deserialize", () => {
+    const raw = JSON.stringify({
+      version: 1,
+      provider: "ollama",
+      model: "nomic-embed-text",
+      dimensions: 3,
+      files: {
+        "Notiz.md": {
+          path: "Notiz.md",
+          mtime: 100,
+          contentHash: "abcd1234",
+          chunkIds: ["Falscher Inhalt#0"],
+        },
+      },
+      chunks: [
+        {
+          id: "Falscher Inhalt#0",
+          path: "Falscher Inhalt",
+          title: "Notiz.md",
+          heading: "",
+          chunkIndex: 0,
+          startLine: 0,
+          content: "Notiz.md\nNotiz",
+          embedding: [1, 0, 0],
+        },
+      ],
+    });
+
+    const store = VectorStore.deserialize(raw, "ollama", "nomic-embed-text");
+    assert.deepEqual(store.getAllIndexedPaths(), []);
+    assert.equal(store.getStats().chunkCount, 0);
+  });
 });
